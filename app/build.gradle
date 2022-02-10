@@ -1,0 +1,138 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'com.google.devtools.ksp'
+
+kotlin {
+    sourceSets {
+        debug {
+            kotlin.srcDir("build/generated/ksp/debug/java")
+        }
+        release {
+            kotlin.srcDir("build/generated/ksp/release/java")
+        }
+    }
+}
+
+android {
+    compileSdk 32
+
+    defaultConfig {
+        applicationId = "com.sergiocrespotoubes.postscleanarchitecture"
+        minSdk 23
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+			proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"),"proguard-rules.pro")
+            buildConfigField ("String", "API_URL", '"https://jsonplaceholder.typicode.com"')
+        }
+        debug {
+            buildConfigField ("String", "API_URL", '"https://jsonplaceholder.typicode.com"')
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerVersion '1.5.21'
+    }
+    packagingOptions {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+}
+
+dependencies {
+
+    // Android
+    implementation("androidx.appcompat:appcompat:1.4.1")
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
+    implementation("androidx.cardview:cardview:1.0.0")
+    implementation("com.google.android.material:material:1.5.0")
+    implementation("com.google.android.play:core:1.10.3")
+    implementation("androidx.core:core-ktx:1.7.0")
+    implementation("androidx.activity:activity-compose:1.4.0")
+    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+
+    // Testing
+    testImplementation ("junit:junit:4.13.2")
+    testImplementation ("io.kotest:kotest-runner-junit5:${kotest_version}")
+    testImplementation ("io.kotest:kotest-assertions-core:${kotest_version}") // for kotest core jvm assertions
+    testImplementation ("io.kotest:kotest-property:${kotest_version}") // for kotest property test
+    testImplementation ("io.mockk:mockk:1.12.2")
+    testImplementation ("io.mockk:mockk-agent-jvm:1.12.2")
+
+    // Android testing
+    androidTestImplementation("androidx.test:core:1.4.0")
+    androidTestImplementation("androidx.test:runner:1.4.0")
+    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation("androidx.test:rules:1.4.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    androidTestImplementation("androidx.test.espresso:espresso-intents:3.4.0")
+    androidTestImplementation("com.agoda.kakao:kakao:2.4.0")
+    debugImplementation ("androidx.fragment:fragment-testing:1.4.1")
+    debugImplementation ("androidx.test:core:1.4.0")
+
+    // Hilt
+    implementation ("com.google.dagger:hilt-android:2.40.5")
+    kapt ("com.google.dagger:hilt-compiler:${hilt_version}")
+    implementation ("androidx.hilt:hilt-navigation-compose:1.0.0")
+
+	// Compose
+    implementation ("androidx.compose.ui:ui:1.0.5")
+    implementation ("androidx.compose.ui:ui-tooling:$compose_version")
+    implementation ("androidx.compose.ui:ui-tooling-preview:$compose_version")
+    implementation ("androidx.compose.foundation:foundation:1.2.0-alpha02")
+    implementation ("androidx.compose.material:material:$compose_version")
+    implementation ("androidx.compose.material:material-icons-core:$compose_version")
+    implementation ("androidx.compose.material:material-icons-extended:$compose_version")
+    implementation ("androidx.compose.runtime:runtime-livedata:$compose_version")
+    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:$compose_version")
+
+	// Retrofit https://square.github.io/retrofit/ & https://square.github.io/okhttp/
+    implementation ("com.squareup.retrofit2:retrofit:${retrofit_version}")
+    implementation ("com.squareup.retrofit2:converter-gson:${retrofit_version}")
+    implementation ("com.squareup.okhttp3:okhttp:${okhttp}")
+    implementation ("com.squareup.okhttp3:logging-interceptor:${okhttp}")
+
+	// Arrow https://github.com/arrow-kt/arrow & https://arrow-kt.io/
+    implementation ("io.arrow-kt:arrow-fx:${arrow_version}")
+    implementation ("io.arrow-kt:arrow-fx-coroutines:${arrow_version}")
+    implementation ("io.arrow-kt:arrow-fx-coroutines-kotlinx-coroutines:${arrow_version}")
+    implementation ("io.arrow-kt:arrow-syntax:${arrow_version}")
+    implementation ("io.arrow-kt:arrow-integrations-retrofit-adapter:${arrow_version}")
+    kapt ("io.arrow-kt:arrow-meta:${arrow_version}")
+
+    // Room components
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    // Timber https://github.com/JakeWharton/timber
+    implementation ("com.jakewharton.timber:timber:5.0.1")
+
+    // Compose Destinations https://github.com/raamcosta/compose-destinations
+    //implementation 'io.github.raamcosta.compose-destinations:core:1.2.2-beta'
+    //ksp 'io.github.raamcosta.compose-destinations:ksp:1.2.2-beta'
+}
