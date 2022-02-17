@@ -1,6 +1,6 @@
 package com.sergiocrespotoubes.postscleanarchitecture.data.network.posts.commands
 
-import arrow.fx.IO
+import arrow.core.Either
 import com.sergiocrespotoubes.postscleanarchitecture.domain.posts.Post
 import com.sergiocrespotoubes.postscleanarchitecture.domain.posts.PostId
 
@@ -15,5 +15,7 @@ interface FindPostById {
 		const val URL = "/places"
 	}
 
-	fun findPostById(postId: PostId): IO<Post>
+	fun findPostById(postId: PostId): Either<Error, Post>
+
+	class Error: Throwable()
 }

@@ -1,5 +1,6 @@
 package com.sergiocrespotoubes.postscleanarchitecture.data.network.posts.commands
 
+import arrow.core.Either
 import arrow.fx.IO
 import com.sergiocrespotoubes.postscleanarchitecture.data.network.posts.models.CommentApi
 
@@ -14,9 +15,11 @@ interface FindCommentsFromPlaces {
 		const val URL = "/places"
 	}
 
-	fun findCommentsFromPosts(): IO<Response>
+	fun findCommentsFromPosts(): Either<Error, Response>
 
 	data class Response(
 		val comments: List<CommentApi> = emptyList()
 	)
+
+	class Error: Throwable()
 }

@@ -1,5 +1,7 @@
 package com.sergiocrespotoubes.postscleanarchitecture.presenter.di
 
+import com.sergiocrespotoubes.postscleanarchitecture.data.network.posts.PostsService
+import com.sergiocrespotoubes.postscleanarchitecture.data.repositories.PostsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,13 +17,13 @@ import dagger.hilt.android.scopes.ViewModelScoped
 @InstallIn(ViewModelComponent::class)
 object RepositoryModule {
 
-	@Provides
+	/*@Provides
 	@ViewModelScoped
-	fun provideAppointmentRepository(
+	fun providePostsRepository(
 		postsService: PostsService
 	): PostsRepository {
-		return PostsRepositoryImpl(appointmentService)
-	}
+		return PostsRepositoryImpl(postsService)
+	}*/
 
 
 }

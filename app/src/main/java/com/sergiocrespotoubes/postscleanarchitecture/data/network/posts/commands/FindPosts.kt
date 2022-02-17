@@ -1,5 +1,6 @@
 package com.sergiocrespotoubes.postscleanarchitecture.data.network.posts.commands
 
+import arrow.core.Either
 import arrow.fx.IO
 import com.sergiocrespotoubes.postscleanarchitecture.data.network.posts.models.PostApi
 
@@ -14,10 +15,11 @@ interface FindPosts {
 		const val URL = "/posts"
 	}
 
-	fun findPosts(): IO<Response>
+	fun findPosts(): Either<Error, Response>
 
 	data class Response(
 		val posts: List<PostApi> = emptyList()
 	)
 
+	class Error: Throwable()
 }

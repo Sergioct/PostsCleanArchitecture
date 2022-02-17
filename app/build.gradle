@@ -1,16 +1,18 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'dagger.hilt.android.plugin'
-apply plugin: 'com.google.devtools.ksp'
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'com.google.devtools.ksp' version '1.6.10-1.0.2' // Depends on your kotlin version
+}
 
 kotlin {
     sourceSets {
         debug {
-            kotlin.srcDir("build/generated/ksp/debug/java")
+            kotlin.srcDir("build/generated/ksp/debug/kotlin")
         }
         release {
-            kotlin.srcDir("build/generated/ksp/release/java")
+            kotlin.srcDir("build/generated/ksp/release/kotlin")
         }
     }
 }
@@ -73,7 +75,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.activity:activity-compose:1.4.0")
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
 
     // Testing
     testImplementation ("junit:junit:4.13.2")
@@ -100,10 +102,10 @@ dependencies {
     implementation ("androidx.hilt:hilt-navigation-compose:1.0.0")
 
 	// Compose
-    implementation ("androidx.compose.ui:ui:1.0.5")
+    implementation ("androidx.compose.ui:ui:$compose_version")
     implementation ("androidx.compose.ui:ui-tooling:$compose_version")
     implementation ("androidx.compose.ui:ui-tooling-preview:$compose_version")
-    implementation ("androidx.compose.foundation:foundation:1.2.0-alpha02")
+    implementation ("androidx.compose.foundation:foundation:1.2.0-alpha03")
     implementation ("androidx.compose.material:material:$compose_version")
     implementation ("androidx.compose.material:material-icons-core:$compose_version")
     implementation ("androidx.compose.material:material-icons-extended:$compose_version")
@@ -118,11 +120,11 @@ dependencies {
 
 	// Arrow https://github.com/arrow-kt/arrow & https://arrow-kt.io/
     implementation ("io.arrow-kt:arrow-fx:${arrow_version}")
-    implementation ("io.arrow-kt:arrow-fx-coroutines:${arrow_version}")
-    implementation ("io.arrow-kt:arrow-fx-coroutines-kotlinx-coroutines:${arrow_version}")
-    implementation ("io.arrow-kt:arrow-syntax:${arrow_version}")
-    implementation ("io.arrow-kt:arrow-integrations-retrofit-adapter:${arrow_version}")
-    kapt ("io.arrow-kt:arrow-meta:${arrow_version}")
+    //implementation ("io.arrow-kt:arrow-fx-coroutines:${arrow_version}")
+    //implementation ("io.arrow-kt:arrow-fx-coroutines-kotlinx-coroutines:${arrow_version}")
+    //implementation ("io.arrow-kt:arrow-syntax:${arrow_version}")
+    //implementation ("io.arrow-kt:arrow-integrations-retrofit-adapter:${arrow_version}")
+    //kapt ("io.arrow-kt:arrow-meta:${arrow_version}")
 
     // Room components
     implementation "androidx.room:room-runtime:$room_version"
@@ -133,6 +135,6 @@ dependencies {
     implementation ("com.jakewharton.timber:timber:5.0.1")
 
     // Compose Destinations https://github.com/raamcosta/compose-destinations
-    //implementation 'io.github.raamcosta.compose-destinations:core:1.2.2-beta'
-    //ksp 'io.github.raamcosta.compose-destinations:ksp:1.2.2-beta'
+    implementation 'io.github.raamcosta.compose-destinations:core:1.3.1-beta'
+    ksp 'io.github.raamcosta.compose-destinations:ksp:1.3.1-beta'
 }
